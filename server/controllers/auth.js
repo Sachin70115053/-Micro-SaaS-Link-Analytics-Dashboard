@@ -3,9 +3,7 @@ const User = require('../models/User');
 const ErrorResponse = require('../utils/errorResponse');
 const asyncHandler = require('../middleware/async');
 
-// @desc    Login user
-// @route   POST /api/v1/auth/login
-// @access  Public
+
 const sendTokenResponse = (user, statusCode, res) => {
     const token = user.getSignedToken();
     
@@ -31,27 +29,7 @@ const sendTokenResponse = (user, statusCode, res) => {
     sendTokenResponse(user, 200, res);
   });
 
-// Get token from model, create cookie and send response
-// const sendTokenResponse = (user, statusCode, res) => {
-//   // Create token
-//   const token = user.getSignedToken();
 
-//   const options = {
-//     expires: new Date(
-//       Date.now() + process.env.JWT_COOKIE_EXPIRE * 24 * 60 * 60 * 1000
-//     ),
-//     httpOnly: true,
-//     secure: process.env.NODE_ENV === 'production',
-//   };
-
-//   res
-//     .status(statusCode)
-//     .cookie('token', token, options)
-//     .json({ success: true, token });
-// };
-
-
-// server/controllers/auth.js
 exports.register = asyncHandler(async (req, res, next) => {
     try {
       const { name, email, password } = req.body;
@@ -78,10 +56,7 @@ exports.register = asyncHandler(async (req, res, next) => {
       next(new ErrorResponse('Registration failed', 500));
     }
   });
-// @desc    Get current logged in user
-// @route   GET /api/v1/auth/me
-// @access  Private
-// server/controllers/auth.js
+
 exports.getMe = asyncHandler(async (req, res) => {
     const user = await User.findById(req.user.id).select('-password');
     

@@ -1,4 +1,4 @@
-import React from 'react';// client/src/components/layout/Spinner.jsx
+import React from 'react';
 
 
 

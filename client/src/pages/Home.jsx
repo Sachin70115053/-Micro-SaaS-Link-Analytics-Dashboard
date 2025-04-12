@@ -1,45 +1,4 @@
-// // client/src/pages/Home.jsx
-// import React from 'react';
 
-// import { Link } from 'react-router-dom';
-// import { useSelector } from 'react-redux';
-
-// const Home = () => {
-//   const { isAuthenticated } = useSelector((state) => state.auth);
-
-//   return (
-//     <div className="text-center py-20">
-//       <h1 className="text-4xl font-bold text-purple-700 mb-6">
-//         URL Shortener with Analytics
-//       </h1>
-//       <p className="text-gray-600 mb-8 max-w-2xl mx-auto">
-//         Create short links, track clicks, and analyze traffic with our powerful 
-//         URL shortening service. Perfect for marketers, developers, and content 
-//         creators.
-//       </p>
-//       <div className="space-x-4">
-//         {isAuthenticated ? (
-//           <Link
-//             to="/dashboard"
-//             className="bg-purple-600 text-white px-6 py-3 rounded-lg hover:bg-purple-700 transition-colors"
-//           >
-//             Go to Dashboard
-//           </Link>
-//         ) : (
-//           <Link
-//             to="/login"
-//             className="bg-purple-600 text-white px-6 py-3 rounded-lg hover:bg-purple-700 transition-colors"
-//           >
-//             Get Started
-//           </Link>
-//         )}
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default Home;
-// client/src/pages/Home.jsx
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';

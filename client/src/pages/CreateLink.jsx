@@ -1,30 +1,28 @@
-// client/src/pages/CreateLink.js
-// import React from 'react';
 
-// import { useState } from 'react';
+// import React, { useState } from 'react';
 // import { useDispatch, useSelector } from 'react-redux';
 // import { createLink } from '../store/slices/linksSlice';
 // import { Link } from 'react-router-dom';
 
 // const CreateLink = () => {
 //   const dispatch = useDispatch();
-//   const { status } = useSelector((state) => state.links);
-  
+//   const status = useSelector((state) => state.links.status.create); // ✅ updated
+
 //   const [formData, setFormData] = useState({
 //     longUrl: '',
 //     customAlias: '',
 //     expiresAt: ''
 //   });
-  
+
 //   const { longUrl, customAlias, expiresAt } = formData;
-  
+
 //   const onChange = (e) => {
 //     setFormData({
 //       ...formData,
 //       [e.target.name]: e.target.value
 //     });
 //   };
-  
+
 //   const onSubmit = (e) => {
 //     e.preventDefault();
 //     dispatch(createLink(formData));
@@ -34,7 +32,7 @@
 //       expiresAt: ''
 //     });
 //   };
-  
+
 //   return (
 //     <div className="max-w-2xl mx-auto">
 //       <div className="bg-white rounded-xl shadow-md overflow-hidden p-6">
@@ -44,7 +42,7 @@
 //             Shorten your long URLs and track their performance
 //           </p>
 //         </div>
-        
+
 //         <form onSubmit={onSubmit} className="space-y-6">
 //           <div>
 //             <label htmlFor="longUrl" className="block text-sm font-medium text-gray-700">
@@ -61,7 +59,7 @@
 //               placeholder="https://example.com/very-long-url"
 //             />
 //           </div>
-          
+
 //           <div>
 //             <label htmlFor="customAlias" className="block text-sm font-medium text-gray-700">
 //               Custom Alias (optional)
@@ -76,7 +74,7 @@
 //               placeholder="my-custom-link"
 //             />
 //           </div>
-          
+
 //           <div>
 //             <label htmlFor="expiresAt" className="block text-sm font-medium text-gray-700">
 //               Expiration Date (optional)
@@ -90,7 +88,7 @@
 //               className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-purple-500 focus:ring-purple-500 p-2 border"
 //             />
 //           </div>
-          
+
 //           <div>
 //             <button
 //               type="submit"
@@ -101,7 +99,7 @@
 //             </button>
 //           </div>
 //         </form>
-        
+
 //         <div className="mt-6 text-center">
 //           <Link
 //             to="/dashboard"
@@ -117,9 +115,6 @@
 
 // export default CreateLink;
 
-
-
-// client/src/pages/CreateLink.js
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { createLink } from '../store/slices/linksSlice';
@@ -135,6 +130,9 @@ const CreateLink = () => {
     expiresAt: ''
   });
 
+  const [errorMsg, setErrorMsg] = useState('');
+  const [successMsg, setSuccessMsg] = useState('');
+
   const { longUrl, customAlias, expiresAt } = formData;
 
   const onChange = (e) => {
@@ -142,16 +140,29 @@ const CreateLink = () => {
       ...formData,
       [e.target.name]: e.target.value
     });
+    setErrorMsg('');
+    setSuccessMsg('');
   };
 
-  const onSubmit = (e) => {
+  const onSubmit = async (e) => {
     e.preventDefault();
-    dispatch(createLink(formData));
-    setFormData({
-      longUrl: '',
-      customAlias: '',
-      expiresAt: ''
-    });
+    if (!longUrl) {
+      setErrorMsg('Long URL is required');
+      return;
+    }
+
+    try {
+      await dispatch(createLink(formData)).unwrap();
+      setSuccessMsg('Link created successfully. Now you can go back to the dashboard to see the link.');
+      setFormData({
+        longUrl: '',
+        customAlias: '',
+        expiresAt: ''
+      });
+    } catch (error) {
+      console.error(error);
+      setErrorMsg(error?.message || 'Failed to create link. Please try again.');
+    }
   };
 
   return (
@@ -163,6 +174,23 @@ const CreateLink = () => {
             Shorten your long URLs and track their performance
           </p>
         </div>
+
+        {/* Show Success Message */}
+        {successMsg && (
+          <div className="mb-4 p-2 text-green-700 text-sm border border-green-300 bg-green-50 rounded">
+            {successMsg}{' '}
+            <Link to="/dashboard" className="text-purple-600 font-medium underline hover:text-purple-800">
+              Go to dashboard
+            </Link>
+          </div>
+        )}
+
+        {/* Show Error Message */}
+        {errorMsg && (
+          <div className="mb-4 p-2 text-red-700 text-sm border border-red-300 bg-red-50 rounded">
+            {errorMsg}
+          </div>
+        )}
 
         <form onSubmit={onSubmit} className="space-y-6">
           <div>
