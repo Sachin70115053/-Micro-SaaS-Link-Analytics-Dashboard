@@ -12,8 +12,8 @@ const Login = () => {
   const { status } = useSelector((state) => state.auth);
 
   const [formData, setFormData] = useState({
-    email: 'intern@dacoid.com',
-    password: 'Test123',
+    email: '',
+    password: '',
   });
 
   const [errors, setErrors] = useState({ email: '', password: '', global: '' });
