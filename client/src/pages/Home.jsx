@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
@@ -11,14 +10,17 @@ const Home = () => {
       {/* Left content */}
       <div className="text-center lg:text-left max-w-2xl">
         <h1 className="text-4xl sm:text-5xl font-extrabold text-gray-800 mb-6 leading-tight">
-          Elevate Your Links with
+          Power Your Links with
           <br />
           <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-500 to-pink-500 animate-pulse">
-            Smart URL Shortening
+            Smart URL Analytics
           </span>
         </h1>
+        <p className="text-gray-600 text-lg mb-4">
+          Welcome to your all-in-one link management solution. Shorten, customize, and share professional URLs — while tracking real-time clicks, device types, browsers, locations, and more.
+        </p>
         <p className="text-gray-600 text-lg mb-8">
-          Manage, analyze and share your links like a pro. Shorten URLs, track performance, and impress your audience with sleek, shareable links.
+          Monitor performance with interactive charts. Generate QR codes. Use expiration rules. Everything you need, right at your fingertips.
         </p>
         <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
           {isAuthenticated ? (
@@ -45,11 +47,11 @@ const Home = () => {
         </div>
       </div>
 
-      {/* Right image with animation */}
+      {/* Right illustration with animation */}
       <div className="w-full lg:w-[50%] flex justify-center">
         <img
           src="https://cdn.pixabay.com/photo/2024/05/20/13/28/ai-generated-8775234_1280.png"
-          alt="Professional illustration"
+          alt="Analytics and Link Management Illustration"
           className="w-[90%] max-w-xs sm:max-w-md md:max-w-lg animate-float transition-transform duration-500 hover:scale-105"
         />
       </div>
